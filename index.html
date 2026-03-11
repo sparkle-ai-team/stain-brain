@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Stain Brain</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============ SPLASH SCREEN ============ -->
+    <div id="splash-screen" class="screen active">
+      <div class="splash-bg-shape"></div>
+      <div class="splash-bg-shape-2"></div>
+      <div class="splash-content">
+        <div class="splash-icon-wrap">
+          <div class="splash-icon-circle">
+            <svg class="splash-drop-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+        </div>
+        <p class="splash-pre-title">AI-Powered Cleaning</p>
+        <h1 class="app-title">Stain<span class="highlight">Brain</span></h1>
+        <p class="app-tagline">Smart stain removal advice, tailored to your fabric and mess. Snap a photo, describe the stain, and get a step-by-step plan.</p>
+        <button id="get-started-btn" class="btn-primary btn-large">
+          Discover Now
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="steam-badge">STEAM Fair 2026</p>
+      </div>
+    </div>
+
+    <!-- ============ HOME DASHBOARD ============ -->
+    <div id="home-screen" class="screen">
+      <header class="app-header">
+        <div class="header-left">
+          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <span class="header-title">StainBrain</span>
+        </div>
+        <div style="width:38px"></div>
+      </header>
+
+      <div class="home-container">
+        <!-- New Stain CTA -->
+        <button id="new-stain-btn" class="new-stain-btn">
+          <div class="new-stain-plus">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <div class="new-stain-text">
+            <span class="new-stain-label">New Stain</span>
+            <span class="new-stain-sub">Analyze a new stain</span>
+          </div>
+          <svg class="new-stain-arrow" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <!-- Tabs -->
+        <div class="home-tabs">
+          <button class="home-tab active" data-tab="recent">Recent</button>
+          <button class="home-tab" data-tab="favorites">Favorites</button>
+        </div>
+
+        <!-- Recent stains grid -->
+        <div id="recent-tab" class="tab-content active">
+          <div id="recent-cards" class="cards-grid"></div>
+          <div id="recent-empty" class="empty-state">
+            <div class="empty-icon">
+              <svg width="48" height="48" fill="none" stroke="#c4b8a9" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <p class="empty-title">No stains yet</p>
+            <p class="empty-sub">Tap "New Stain" above to analyze your first stain and see results here.</p>
+          </div>
+        </div>
+
+        <!-- Favorites grid -->
+        <div id="favorites-tab" class="tab-content">
+          <div id="favorites-cards" class="cards-grid"></div>
+          <div id="favorites-empty" class="empty-state">
+            <div class="empty-icon">
+              <svg width="48" height="48" fill="none" stroke="#c4b8a9" stroke-width="1.2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <p class="empty-title">No favorites yet</p>
+            <p class="empty-sub">Heart a stain from your recent list to save it here for quick access.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FORM SCREEN ============ -->
+    <div id="form-screen" class="screen">
+      <header class="app-header">
+        <div class="header-left home-link" id="form-home-link">
+          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <span class="header-title">StainBrain</span>
+        </div>
+        <button id="form-close-btn" class="header-btn" title="Close">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div class="form-container">
+        <div class="form-hero">
+          <p class="form-eyebrow">Tell us about it</p>
+          <h2>Describe Your<br><span class="serif-accent">Stain</span></h2>
+        </div>
+
+        <!-- PHOTO UPLOAD -->
+        <div class="form-section">
+          <label class="section-label">
+            Upload a Photo <span class="optional-tag">optional</span>
+          </label>
+          <div id="photo-upload-area" class="photo-upload-area">
+            <input type="file" id="photo-input" accept="image/*" capture="environment" hidden />
+            <div id="upload-placeholder" class="upload-placeholder">
+              <div class="upload-icon">
+                <svg width="36" height="36" fill="none" stroke="#a09382" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              </div>
+              <p class="upload-text">Tap to take a photo or upload</p>
+              <p class="upload-subtext">Helps AI identify fabric & stain type</p>
+            </div>
+            <div id="photo-preview-container" class="photo-preview-container hidden">
+              <img id="photo-preview" class="photo-preview" alt="Stain photo preview" />
+              <button id="remove-photo-btn" class="remove-photo-btn">&#10005;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FABRIC TYPE -->
+        <div class="form-section">
+          <label class="section-label" for="fabric-select">What's the material?</label>
+          <div class="select-wrapper">
+            <select id="fabric-select">
+              <option value="" disabled selected>Choose fabric / surface type...</option>
+              <option value="cotton">Cotton</option>
+              <option value="polyester">Polyester</option>
+              <option value="wool">Wool</option>
+              <option value="silk">Silk</option>
+              <option value="denim">Denim</option>
+              <option value="linen">Linen</option>
+              <option value="leather">Leather</option>
+              <option value="suede">Suede</option>
+              <option value="carpet">Carpet / Rug</option>
+              <option value="upholstery">Upholstery / Couch</option>
+              <option value="microfiber">Microfiber</option>
+              <option value="concrete">Concrete / Stone</option>
+              <option value="wood">Wood</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="select-arrow">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- STAIN TYPE -->
+        <div class="form-section">
+          <label class="section-label" for="stain-input">What caused the stain?</label>
+          <div class="quick-tags">
+            <button class="tag-btn" data-value="Coffee">Coffee</button>
+            <button class="tag-btn" data-value="Red Wine">Wine</button>
+            <button class="tag-btn" data-value="Grass">Grass</button>
+            <button class="tag-btn" data-value="Grease">Grease</button>
+            <button class="tag-btn" data-value="Blood">Blood</button>
+            <button class="tag-btn" data-value="Ink">Ink</button>
+            <button class="tag-btn" data-value="Mud">Mud</button>
+            <button class="tag-btn" data-value="Tomato Sauce">Sauce</button>
+            <button class="tag-btn tag-btn-other" id="other-tag-btn" data-value="__other__">Other</button>
+          </div>
+          <!-- Hidden until "Other" is tapped -->
+          <div id="other-input-wrap" class="other-input-wrap hidden">
+            <input type="text" id="stain-input" class="text-input" placeholder="Type the stain cause..." />
+          </div>
+        </div>
+
+        <!-- TIME -->
+        <div class="form-section">
+          <label class="section-label" for="time-select">How long has it been there?</label>
+          <div class="select-wrapper">
+            <select id="time-select">
+              <option value="" disabled selected>Select time frame...</option>
+              <option value="just-now">Just happened (under 10 min)</option>
+              <option value="under-1hr">Under 1 hour</option>
+              <option value="few-hours">A few hours</option>
+              <option value="overnight">Overnight</option>
+              <option value="1-3-days">1-3 days</option>
+              <option value="week-plus">A week or more</option>
+              <option value="unknown">Not sure / old stain</option>
+            </select>
+            <span class="select-arrow">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </span>
+          </div>
+        </div>
+
+        <!-- EXTRA NOTES -->
+        <div class="form-section">
+          <label class="section-label" for="notes-input">Anything else? <span class="optional-tag">optional</span></label>
+          <textarea id="notes-input" class="text-input textarea" placeholder="e.g. Already tried soap, it's a white shirt, the rug is antique..." rows="3"></textarea>
+        </div>
+
+        <!-- SUBMIT -->
+        <button id="analyze-btn" class="btn-primary btn-large btn-full" disabled>
+          Analyze My Stain
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="disclaimer">AI-generated advice &middot; Always test on a small hidden area first</p>
+      </div>
+    </div>
+
+    <!-- ============ LOADING SCREEN ============ -->
+    <div id="loading-screen" class="screen">
+      <div class="loading-bg-shape"></div>
+      <div class="loading-content">
+        <div class="loading-brain">
+          <div class="loading-icon-circle">
+            <svg class="loading-drop-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+        </div>
+        <h2 class="loading-title">Analyzing your stain...</h2>
+        <p class="loading-subtitle">Our AI is finding the best approach</p>
+        <div class="loading-steps">
+          <div class="loading-step" id="step-1"><span class="step-dot"></span><span>Identifying stain type</span></div>
+          <div class="loading-step" id="step-2"><span class="step-dot"></span><span>Checking fabric compatibility</span></div>
+          <div class="loading-step" id="step-3"><span class="step-dot"></span><span>Finding best cleaning method</span></div>
+          <div class="loading-step" id="step-4"><span class="step-dot"></span><span>Generating step-by-step plan</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RESULTS SCREEN ============ -->
+    <div id="results-screen" class="screen">
+      <header class="app-header">
+        <div class="header-left home-link" id="results-home-link">
+          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <span class="header-title">StainBrain</span>
+        </div>
+        <button id="results-close-btn" class="header-btn" title="Close">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+      <div class="results-container">
+        <div class="results-eyebrow">
+          <p class="form-eyebrow">Your cleaning plan</p>
+        </div>
+
+        <!-- Stain summary card -->
+        <div class="result-card summary-card">
+          <div class="summary-header">
+            <div>
+              <div class="summary-label">Stain Detected</div>
+              <div class="summary-stain" id="result-stain-type">Coffee</div>
+            </div>
+            <div class="difficulty-badge" id="result-difficulty">
+              <span class="difficulty-dot"></span>
+              <span id="difficulty-text">Moderate</span>
+            </div>
+          </div>
+          <div class="summary-details">
+            <div class="detail-chip"><span id="result-fabric">Cotton</span></div>
+            <div class="detail-chip"><span id="result-time">A few hours</span></div>
+          </div>
+          <div class="success-rate">
+            <div class="success-bar-bg"><div class="success-bar-fill" id="success-bar"></div></div>
+            <span class="success-text" id="success-text">85% success rate</span>
+          </div>
+        </div>
+
+        <!-- What you'll need -->
+        <div class="result-card">
+          <h3 class="card-title">What You'll Need</h3>
+          <div id="supplies-list" class="supplies-list"></div>
+        </div>
+
+        <!-- Steps -->
+        <div class="result-card">
+          <h3 class="card-title">Step-by-Step Plan</h3>
+          <div id="steps-list" class="steps-list"></div>
+        </div>
+
+        <!-- Pro tips -->
+        <div class="result-card tips-card">
+          <h3 class="card-title">Pro Tips</h3>
+          <div id="tips-list" class="tips-list"></div>
+        </div>
+
+        <!-- Warning -->
+        <div class="result-card warning-card">
+          <div class="warning-icon">
+            <svg width="20" height="20" fill="none" stroke="#92400e" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+          </div>
+          <p id="warning-text"></p>
+        </div>
+
+        <!-- Back to home -->
+        <button id="back-home-btn" class="btn-primary btn-large btn-full">
+          Back to Home
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
