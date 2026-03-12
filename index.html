@@ -4,28 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Stain Brain</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="app">
 
     <!-- ============ SPLASH SCREEN ============ -->
     <div id="splash-screen" class="screen active">
-      <div class="splash-bg-shape"></div>
-      <div class="splash-bg-shape-2"></div>
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="blob blob-4"></div>
+      <!-- Liquid drip decorations -->
+      <div class="drip-shape drip-tear drip-splash-1"></div>
+      <div class="drip-shape drip-drop drip-splash-2"></div>
+      <div class="drip-shape drip-splat drip-splash-3"></div>
       <div class="splash-content">
         <div class="splash-icon-wrap">
           <div class="splash-icon-circle">
-            <svg class="splash-drop-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
           </div>
         </div>
         <p class="splash-pre-title">AI-Powered Cleaning</p>
         <h1 class="app-title">Stain<span class="highlight">Brain</span></h1>
-        <p class="app-tagline">Smart stain removal advice, tailored to your fabric and mess. Snap a photo, describe the stain, and get a step-by-step plan.</p>
-        <button id="get-started-btn" class="btn-primary btn-large">
-          Discover Now
+        <p class="app-tagline">Smart stain removal advice, tailored to your fabric and mess. Snap a photo or describe the stain.</p>
+        <button id="get-started-btn" class="btn-primary btn-glow">
+          Get Started
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
         <p class="steam-badge">STEAM Fair 2026</p>
@@ -34,19 +40,27 @@
 
     <!-- ============ HOME DASHBOARD ============ -->
     <div id="home-screen" class="screen">
-      <header class="app-header">
+      <header class="app-header glass-header">
         <div class="header-left">
-          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <div class="header-logo-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
           <span class="header-title">StainBrain</span>
         </div>
         <div style="width:38px"></div>
       </header>
 
       <div class="home-container">
+        <div class="home-blob blob-home-1"></div>
+        <div class="home-blob blob-home-2"></div>
+        <!-- Liquid drip decorations -->
+        <div class="drip-shape drip-tear drip-home-1"></div>
+        <div class="drip-shape drip-splat drip-home-2"></div>
+
         <!-- New Stain CTA -->
         <button id="new-stain-btn" class="new-stain-btn">
           <div class="new-stain-plus">
-            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
           </div>
           <div class="new-stain-text">
             <span class="new-stain-label">New Stain</span>
@@ -66,7 +80,8 @@
           <div id="recent-cards" class="cards-grid"></div>
           <div id="recent-empty" class="empty-state">
             <div class="empty-icon">
-              <svg width="48" height="48" fill="none" stroke="#c4b8a9" stroke-width="1.2" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              <div class="empty-blob-mini"></div>
+              <svg width="44" height="44" fill="none" stroke="rgba(0,0,0,0.25)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
             </div>
             <p class="empty-title">No stains yet</p>
             <p class="empty-sub">Tap "New Stain" above to analyze your first stain and see results here.</p>
@@ -78,7 +93,7 @@
           <div id="favorites-cards" class="cards-grid"></div>
           <div id="favorites-empty" class="empty-state">
             <div class="empty-icon">
-              <svg width="48" height="48" fill="none" stroke="#c4b8a9" stroke-width="1.2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg width="44" height="44" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </div>
             <p class="empty-title">No favorites yet</p>
             <p class="empty-sub">Heart a stain from your recent list to save it here for quick access.</p>
@@ -87,11 +102,111 @@
       </div>
     </div>
 
-    <!-- ============ FORM SCREEN ============ -->
+    <!-- ============ PATHWAY SCREEN ============ -->
+    <div id="pathway-screen" class="screen">
+      <header class="app-header glass-header">
+        <div class="header-left home-link" id="pathway-home-link">
+          <div class="header-logo-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <span class="header-title">StainBrain</span>
+        </div>
+        <button id="pathway-close-btn" class="header-btn" title="Close">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div class="pathway-container">
+        <div class="pathway-blob blob-pw-1"></div>
+        <div class="pathway-blob blob-pw-2"></div>
+        <!-- Liquid drip decorations -->
+        <div class="drip-shape drip-tear drip-pw-1"></div>
+        <div class="drip-shape drip-drop drip-pw-2"></div>
+        <div class="pathway-hero">
+          <p class="section-eyebrow">Choose your path</p>
+          <h2 class="screen-title">What kind of<br><span class="gradient-text">stain</span> is it?</h2>
+        </div>
+
+        <div class="pathway-cards">
+          <button class="pathway-card pathway-known" id="path-known-btn">
+            <div class="pathway-card-blob"></div>
+            <div class="pathway-icon">
+              <svg width="36" height="36" fill="none" stroke="white" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M8 11h6M11 8v6"/></svg>
+            </div>
+            <h3>I Know What It Is</h3>
+            <p>Coffee, wine, grass, ink — tell us the stain and fabric for a custom plan.</p>
+          </button>
+
+          <button class="pathway-card pathway-mystery" id="path-mystery-btn">
+            <div class="pathway-card-blob"></div>
+            <div class="pathway-icon">
+              <svg width="36" height="36" fill="none" stroke="white" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+            <h3>Mystery Stain</h3>
+            <p>Not sure what it is? Upload a photo and let our AI figure it out.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MYSTERY STAIN SCREEN ============ -->
+    <div id="mystery-screen" class="screen">
+      <header class="app-header glass-header">
+        <div class="header-left home-link" id="mystery-home-link">
+          <div class="header-logo-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <span class="header-title">StainBrain</span>
+        </div>
+        <button id="mystery-close-btn" class="header-btn" title="Close">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div class="mystery-container">
+        <div class="mystery-blob blob-my-1"></div>
+        <div class="mystery-blob blob-my-2"></div>
+        <!-- Liquid drip decoration -->
+        <div class="drip-shape drip-tear drip-my-1"></div>
+        <div class="mystery-hero">
+          <p class="section-eyebrow">Mystery stain</p>
+          <h2 class="screen-title">Snap a photo,<br>we'll <span class="gradient-text">figure it out</span></h2>
+        </div>
+
+        <!-- PHOTO UPLOAD -->
+        <div class="form-section">
+          <div id="mystery-photo-area" class="photo-upload-area">
+            <input type="file" id="mystery-photo-input" accept="image/*" capture="environment" hidden />
+            <div id="mystery-upload-placeholder" class="upload-placeholder">
+              <div class="upload-icon-circle">
+                <svg width="32" height="32" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              </div>
+              <p class="upload-text">Tap to take a photo or upload</p>
+              <p class="upload-subtext">Our AI will analyze the stain type</p>
+            </div>
+            <div id="mystery-preview-container" class="photo-preview-container hidden">
+              <img id="mystery-photo-preview" class="photo-preview" alt="Stain photo preview" />
+              <button id="mystery-remove-photo" class="remove-photo-btn">&#10005;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBMIT -->
+        <button id="mystery-analyze-btn" class="btn-primary btn-glow btn-full" disabled>
+          Analyze Mystery Stain
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p class="disclaimer">AI-generated advice &middot; Always test on a small area first</p>
+      </div>
+    </div>
+
+    <!-- ============ FORM SCREEN (Known Stain) ============ -->
     <div id="form-screen" class="screen">
-      <header class="app-header">
+      <header class="app-header glass-header">
         <div class="header-left home-link" id="form-home-link">
-          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <div class="header-logo-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
           <span class="header-title">StainBrain</span>
         </div>
         <button id="form-close-btn" class="header-btn" title="Close">
@@ -100,9 +215,13 @@
       </header>
 
       <div class="form-container">
+        <div class="form-blob blob-f-1"></div>
+        <div class="form-blob blob-f-2"></div>
+        <!-- Liquid drip decoration -->
+        <div class="drip-shape drip-drop drip-form-1"></div>
         <div class="form-hero">
-          <p class="form-eyebrow">Tell us about it</p>
-          <h2>Describe Your<br><span class="serif-accent">Stain</span></h2>
+          <p class="section-eyebrow">Known stain</p>
+          <h2 class="screen-title">Describe Your<br><span class="gradient-text">Stain</span></h2>
         </div>
 
         <!-- PHOTO UPLOAD -->
@@ -113,8 +232,8 @@
           <div id="photo-upload-area" class="photo-upload-area">
             <input type="file" id="photo-input" accept="image/*" capture="environment" hidden />
             <div id="upload-placeholder" class="upload-placeholder">
-              <div class="upload-icon">
-                <svg width="36" height="36" fill="none" stroke="#a09382" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              <div class="upload-icon-circle">
+                <svg width="32" height="32" fill="none" stroke="white" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
               </div>
               <p class="upload-text">Tap to take a photo or upload</p>
               <p class="upload-subtext">Helps AI identify fabric & stain type</p>
@@ -200,7 +319,7 @@
         </div>
 
         <!-- SUBMIT -->
-        <button id="analyze-btn" class="btn-primary btn-large btn-full" disabled>
+        <button id="analyze-btn" class="btn-primary btn-glow btn-full" disabled>
           Analyze My Stain
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -210,11 +329,16 @@
 
     <!-- ============ LOADING SCREEN ============ -->
     <div id="loading-screen" class="screen">
-      <div class="loading-bg-shape"></div>
+      <div class="loading-blob blob-l-1"></div>
+      <div class="loading-blob blob-l-2"></div>
+      <div class="loading-blob blob-l-3"></div>
+      <!-- Liquid drip decorations -->
+      <div class="drip-shape drip-tear drip-load-1"></div>
+      <div class="drip-shape drip-drop drip-load-2"></div>
       <div class="loading-content">
         <div class="loading-brain">
           <div class="loading-icon-circle">
-            <svg class="loading-drop-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
           </div>
         </div>
         <h2 class="loading-title">Analyzing your stain...</h2>
@@ -230,9 +354,11 @@
 
     <!-- ============ RESULTS SCREEN ============ -->
     <div id="results-screen" class="screen">
-      <header class="app-header">
+      <header class="app-header glass-header">
         <div class="header-left home-link" id="results-home-link">
-          <svg class="header-logo" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3d3426" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          <div class="header-logo-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
           <span class="header-title">StainBrain</span>
         </div>
         <button id="results-close-btn" class="header-btn" title="Close">
@@ -240,8 +366,13 @@
         </button>
       </header>
       <div class="results-container">
+        <div class="results-blob blob-r-1"></div>
+        <div class="results-blob blob-r-2"></div>
+        <!-- Liquid drip decoration -->
+        <div class="drip-shape drip-splat drip-result-1"></div>
+
         <div class="results-eyebrow">
-          <p class="form-eyebrow">Your cleaning plan</p>
+          <p class="section-eyebrow">Your cleaning plan</p>
         </div>
 
         <!-- Stain summary card -->
@@ -287,13 +418,13 @@
         <!-- Warning -->
         <div class="result-card warning-card">
           <div class="warning-icon">
-            <svg width="20" height="20" fill="none" stroke="#92400e" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
           </div>
           <p id="warning-text"></p>
         </div>
 
         <!-- Back to home -->
-        <button id="back-home-btn" class="btn-primary btn-large btn-full">
+        <button id="back-home-btn" class="btn-primary btn-glow btn-full">
           Back to Home
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -302,6 +433,6 @@
 
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* ==========================================
    STAIN BRAIN — Full App Logic
    Dashboard, favorites, localStorage,
-   form, analysis, results.
+   two pathways (known + mystery), results.
    ========================================== */
 
 // ==========================================
@@ -41,7 +41,7 @@ function getStainById(id) {
   return loadStains().find(x => x.id === id) || null;
 }
 
-// Track the current result being viewed (null = fresh analysis)
+// Track the current result being viewed
 let currentViewId = null;
 
 // ==========================================
@@ -51,6 +51,8 @@ let currentViewId = null;
 const screens = {
   splash:   document.getElementById('splash-screen'),
   home:     document.getElementById('home-screen'),
+  pathway:  document.getElementById('pathway-screen'),
+  mystery:  document.getElementById('mystery-screen'),
   form:     document.getElementById('form-screen'),
   loading:  document.getElementById('loading-screen'),
   results:  document.getElementById('results-screen'),
@@ -65,6 +67,21 @@ const els = {
   recentEmpty:   document.getElementById('recent-empty'),
   favoritesCards: document.getElementById('favorites-cards'),
   favoritesEmpty: document.getElementById('favorites-empty'),
+  // Pathway
+  pathwayHomeLink: document.getElementById('pathway-home-link'),
+  pathwayCloseBtn: document.getElementById('pathway-close-btn'),
+  pathKnownBtn:  document.getElementById('path-known-btn'),
+  pathMysteryBtn: document.getElementById('path-mystery-btn'),
+  // Mystery
+  mysteryHomeLink: document.getElementById('mystery-home-link'),
+  mysteryCloseBtn: document.getElementById('mystery-close-btn'),
+  mysteryPhotoArea: document.getElementById('mystery-photo-area'),
+  mysteryPhotoInput: document.getElementById('mystery-photo-input'),
+  mysteryUploadPlaceholder: document.getElementById('mystery-upload-placeholder'),
+  mysteryPreviewContainer: document.getElementById('mystery-preview-container'),
+  mysteryPhotoPreview: document.getElementById('mystery-photo-preview'),
+  mysteryRemovePhoto: document.getElementById('mystery-remove-photo'),
+  mysteryAnalyzeBtn: document.getElementById('mystery-analyze-btn'),
   // Form
   formHomeLink:  document.getElementById('form-home-link'),
   formCloseBtn:  document.getElementById('form-close-btn'),
@@ -94,8 +111,7 @@ const els = {
 function showScreen(name) {
   Object.values(screens).forEach(s => s.classList.remove('active'));
   screens[name].classList.add('active');
-  // Scroll to top
-  const scrollable = screens[name].querySelector('.home-container, .form-container, .results-container');
+  const scrollable = screens[name].querySelector('.home-container, .form-container, .results-container, .pathway-container, .mystery-container');
   if (scrollable) scrollable.scrollTop = 0;
 }
 
@@ -122,10 +138,9 @@ document.querySelectorAll('.home-tab').forEach(tab => {
   });
 });
 
-// New Stain button
+// New Stain button → Pathway screen
 els.newStainBtn.addEventListener('click', () => {
-  resetForm();
-  showScreen('form');
+  showScreen('pathway');
 });
 
 function renderDashboard() {
@@ -166,7 +181,7 @@ function buildCard(s) {
           <div class="card-meta">${s.result.fabricLabel} &middot; ${timeAgo}</div>
         </div>
         <button class="card-fav-btn ${s.favorite ? 'favorited' : ''}" data-fav-id="${s.id}" title="Toggle favorite">
-          <svg width="20" height="20" fill="${s.favorite ? '#c17d52' : 'none'}" stroke="${s.favorite ? '#c17d52' : '#a09382'}" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <svg width="20" height="20" fill="${s.favorite ? '#e878a4' : 'none'}" stroke="${s.favorite ? '#e878a4' : 'rgba(0,0,0,0.2)'}" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
       </div>
       <div class="card-bottom">
@@ -181,10 +196,8 @@ function buildCard(s) {
 }
 
 function attachCardListeners(container) {
-  // Card tap -> view result
   container.querySelectorAll('.stain-card').forEach(card => {
     card.addEventListener('click', (e) => {
-      // Don't navigate if they clicked the fav button
       if (e.target.closest('.card-fav-btn')) return;
       const id = card.dataset.id;
       const stain = getStainById(id);
@@ -196,7 +209,6 @@ function attachCardListeners(container) {
     });
   });
 
-  // Favorite toggle
   container.querySelectorAll('.card-fav-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -220,7 +232,111 @@ function getRelativeTime(isoString) {
 }
 
 // ==========================================
-//  FORM
+//  PATHWAY SCREEN
+// ==========================================
+
+els.pathwayHomeLink.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
+els.pathwayCloseBtn.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
+
+els.pathKnownBtn.addEventListener('click', () => {
+  resetForm();
+  showScreen('form');
+});
+
+els.pathMysteryBtn.addEventListener('click', () => {
+  resetMysteryForm();
+  showScreen('mystery');
+});
+
+// ==========================================
+//  MYSTERY STAIN SCREEN
+// ==========================================
+
+els.mysteryHomeLink.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
+els.mysteryCloseBtn.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
+
+// Photo upload for mystery
+els.mysteryPhotoArea.addEventListener('click', () => {
+  if (els.mysteryPreviewContainer.classList.contains('hidden')) els.mysteryPhotoInput.click();
+});
+els.mysteryPhotoInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) showMysteryPreview(file);
+});
+els.mysteryPhotoArea.addEventListener('dragover', (e) => { e.preventDefault(); els.mysteryPhotoArea.classList.add('dragover'); });
+els.mysteryPhotoArea.addEventListener('dragleave', () => { els.mysteryPhotoArea.classList.remove('dragover'); });
+els.mysteryPhotoArea.addEventListener('drop', (e) => {
+  e.preventDefault();
+  els.mysteryPhotoArea.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) showMysteryPreview(file);
+});
+
+function showMysteryPreview(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    els.mysteryPhotoPreview.src = e.target.result;
+    els.mysteryUploadPlaceholder.style.display = 'none';
+    els.mysteryPreviewContainer.classList.remove('hidden');
+    els.mysteryAnalyzeBtn.disabled = false;
+  };
+  reader.readAsDataURL(file);
+}
+
+els.mysteryRemovePhoto.addEventListener('click', (e) => {
+  e.stopPropagation();
+  resetMysteryForm();
+});
+
+function resetMysteryForm() {
+  els.mysteryPhotoInput.value = '';
+  els.mysteryPhotoPreview.src = '';
+  els.mysteryUploadPlaceholder.style.display = 'block';
+  els.mysteryPreviewContainer.classList.add('hidden');
+  els.mysteryAnalyzeBtn.disabled = true;
+}
+
+// Analyze mystery stain
+els.mysteryAnalyzeBtn.addEventListener('click', () => {
+  showScreen('loading');
+  runLoadingAnimation(() => {
+    const result = generateMysteryResult();
+    const record = { formData: { mystery: true }, result: result };
+    const saved = addStain(record);
+    currentViewId = saved.id;
+    renderResult(result);
+    showScreen('results');
+  });
+});
+
+function generateMysteryResult() {
+  // Pick a random stain from the database for a fun demo
+  const stainKeys = Object.keys(STAIN_DATABASE);
+  const randomKey = stainKeys[Math.floor(Math.random() * stainKeys.length)];
+  const stainData = STAIN_DATABASE[randomKey];
+  const stainName = randomKey.charAt(0).toUpperCase() + randomKey.slice(1);
+
+  const success = Math.min(95, Math.max(40, stainData.successBase - 5));
+  let difficultyLabel = 'Moderate', difficultyClass = 'moderate';
+  if (stainData.difficulty === 'easy') { difficultyLabel = 'Easy'; difficultyClass = 'easy'; }
+  if (stainData.difficulty === 'hard') { difficultyLabel = 'Tough'; difficultyClass = 'hard'; }
+
+  return {
+    stainName: stainName + ' (AI Detected)',
+    fabricLabel: 'Unknown Fabric',
+    timeLabel: 'Unknown',
+    difficultyLabel, difficultyClass,
+    success,
+    supplies: stainData.supplies,
+    steps: stainData.steps,
+    tips: stainData.tips,
+    timeNote: 'Since we don\'t know how old this stain is, treat it as a set-in stain for best results.',
+    warning: 'AI identification may not be 100% accurate. Always test any cleaning solution on a small, hidden area first.',
+  };
+}
+
+// ==========================================
+//  FORM (Known Stain)
 // ==========================================
 
 // Home links
@@ -268,18 +384,15 @@ let selectedStainValue = '';
 
 document.querySelectorAll('.tag-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    // Deselect all
     document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
     if (btn.dataset.value === '__other__') {
-      // Show the text input
       els.otherInputWrap.classList.remove('hidden');
       els.stainInput.value = '';
       els.stainInput.focus();
       selectedStainValue = '';
     } else {
-      // Hide Other input, set value
       els.otherInputWrap.classList.add('hidden');
       selectedStainValue = btn.dataset.value;
       els.stainInput.value = btn.dataset.value;
@@ -288,7 +401,6 @@ document.querySelectorAll('.tag-btn').forEach(btn => {
   });
 });
 
-// When typing in Other input
 if (els.stainInput) {
   els.stainInput.addEventListener('input', () => {
     selectedStainValue = els.stainInput.value.trim();
@@ -296,13 +408,11 @@ if (els.stainInput) {
   });
 }
 
-// Form validation
 [els.fabricSelect, els.timeSelect].forEach(el => {
   el.addEventListener('change', updateAnalyzeBtn);
 });
 
 function getStainValue() {
-  // If Other is active, use the text input
   if (els.otherTagBtn.classList.contains('active')) {
     return els.stainInput.value.trim();
   }
@@ -335,7 +445,6 @@ els.analyzeBtn.addEventListener('click', () => {
   const data = getFormData();
   runLoadingAnimation(() => {
     const result = generateResult(data);
-    // Save to localStorage
     const record = { formData: data, result: result };
     const saved = addStain(record);
     currentViewId = saved.id;
@@ -384,7 +493,6 @@ function runLoadingAnimation(callback) {
 //  RESULTS SCREEN
 // ==========================================
 
-// Navigation
 els.resultsHomeLink.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
 els.resultsCloseBtn.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
 els.backHomeBtn.addEventListener('click', () => { showScreen('home'); renderDashboard(); });
@@ -406,7 +514,7 @@ function renderResult(result) {
 
   const suppliesList = document.getElementById('supplies-list');
   suppliesList.innerHTML = result.supplies
-    .map(s => `<div class="supply-chip"><span style="color:#7a7d5a;font-size:15px">&#10003;</span> ${s}</div>`)
+    .map(s => `<div class="supply-chip"><span style="color:var(--teal);font-size:15px">&#10003;</span> ${s}</div>`)
     .join('');
 
   const stepsList = document.getElementById('steps-list');
